@@ -7,8 +7,14 @@ export class AwsOrganizationCreationStack extends cdk.Stack {
     super(scope, id, props);
 
     // Create an AWS Organization
-    new organizations.CfnOrganization(this, 'MyOrganization', {
+    const myOrganization = new organizations.CfnOrganization(this, 'MyOrganization', {
       featureSet: 'ALL',
+    });
+
+    // Create an organizational unit (OU)
+    const myOU = new organizations.CfnOrganizationalUnit(this, 'MyOU', {
+      parentId: myOrganization.ref,
+      name: 'KMiuraOU',
     });
   }
 }
